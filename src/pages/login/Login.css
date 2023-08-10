@@ -1,0 +1,82 @@
+.login-background {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  background: url("../../assets/meat.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  filter: blur(3px);
+}
+
+.login-wrap {
+  /* height: 350px; */
+  width: 60%;
+  background-color: white;
+  margin: auto;
+  display: flex;
+  flex-direction: row-reverse;
+  border-radius: 3.5px;
+  overflow: hidden;
+}
+
+.login-left-side {
+  flex: 1;
+  background-image: url("../../assets/meat.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  padding: 10px;
+}
+
+.login-right-side {
+  flex: 1;
+  background-color: #faedcd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-title {
+  background: linear-gradient(to right, red, #fd5200, #e85d04);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.login-form {
+  text-align: center;
+}
+
+.login-input-wrap {
+  margin-bottom: 16px;
+}
+
+.login-input {
+  background-color: #f5f5f5;
+  outline: none;
+  padding: 10px 15px;
+  border: none;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.login-forgot-password {
+  display: inline-block;
+  color: #774936;
+  text-decoration: none;
+  margin-top: 10px;
+}
+
+.login-signup {
+  display: inline-block;
+  color: #bc6c25;
+  text-decoration: none;
+}
+
+.errorMessage {
+  color: red;
+}

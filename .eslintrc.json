@@ -18,11 +18,18 @@
         "react"
     ],
     "rules": {
+        "no-debugger": "off",
         "react/react-in-jsx-scope": "off",
         "prettier/prettier": [
-            "error",
+            "off",
             {
-              "endOfLine": "auto"
+              "endOfLine": "auto",
+              "semi": true,
+              "tabWidth": 2,
+              "printWidth": 100,
+              "singleQuote": false,
+              "trailingComma": "none",
+              "jsxBracketSameLine": true
             }
           ]
     }
