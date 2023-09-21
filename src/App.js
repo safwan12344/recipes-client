@@ -1,21 +1,25 @@
-import { useContext } from "react";
-
+import { useSnapshot } from "valtio";
 import "./App.css";
-import UserContext from "./context/UserContext";
-import AuthContext from "./context/AuthContext";
-import Header from "./components/header/Header";
+import BookList from "./components/books/BookList";
 import Categories from "./components/categories/Categories";
+import SearchRecipiesResault from "./components/search/SearchRecipiesResault";
+import searchState from "./states/search";
+import Loading from "./assets/loading";
 
 function App() {
-  const user = useContext(UserContext);
-  const auth = useContext(AuthContext);
-
-  console.log(user.user);
-  console.log(auth.token);
+  const searchSnap = useSnapshot(searchState);
   return (
     <div className='App'>
-      <Header />
-      <Categories />
+      <BookList />
+      {searchSnap.search && searchSnap.isLoading && <Loading />}
+      {searchSnap.search && !searchSnap.isLoading && (
+        <>
+          {searchSnap.results.length === 0 && <h1>No result were found for {searchSnap.search}</h1>}
+          {searchSnap.results.length > 0 && <h1>Result were found for {searchSnap.search}</h1>}
+          <SearchRecipiesResault />
+        </>
+      )}
+      {!searchSnap.search && <Categories />}
     </div>
   );
 }

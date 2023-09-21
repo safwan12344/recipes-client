@@ -1,42 +1,49 @@
 // import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 import "./Login.css";
-import AuthContext from "../../context/AuthContext";
-import UserContext from "../../context/UserContext";
+import { useSnapshot } from "valtio";
+import userState from "../../states/user";
+import authState from "../../states/auth";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const auth = useContext(AuthContext);
-  const user = useContext(UserContext);
+  const authSnap = useSnapshot(authState);
+  const userSnap = useSnapshot(userState);
+
+  const location = useLocation();
+
   const navigate = useNavigate();
 
   const onLogin = async (e) => {
     e.preventDefault();
     try {
-      let response = await axios.post("http://localhost:3002/auth/login", {
+      console.log(password);
+
+      let response = await axios.post(`${process.env.REACT_APP_API_URL}/auth/login`, {
         username: username,
         password: password,
       });
       setErrorMessage("");
-      auth.setToken(response.data.token);
-      localStorage.setItem("token", JSON.stringify(response.data.token));
+      authSnap.setToken(response.data.token);
 
-      response = await axios.get("http://localhost:3002/auth/me", {
+      response = await axios.get(`${process.env.REACT_APP_API_URL}/auth/me`, {
         headers: {
           Authorization: `TOKEN ${response.data.token}`,
         },
       });
-      user.setUser(response.data.user);
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-
-      navigate("/");
+      userSnap.setUser(response.data.user);
+      if (location.state?.goBack) {
+        navigate(-1);
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       setErrorMessage(error.response.data.message);
     }

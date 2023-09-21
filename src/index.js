@@ -1,32 +1,50 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
 import reportWebVitals from "./reportWebVitals";
-import { RouterProvider } from "react-router-dom";
-import router from "./utils/router";
-import UserContext, { USER } from "./context/UserContext";
-import AuthContext, { TOKEN } from "./context/AuthContext";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import axios from "axios";
+import { useSnapshot } from "valtio";
+import categoriesState from "./states/categories";
+import Error from "./components/error/Error";
+import errorState from "./states/error";
 
 const Root = () => {
-  const [user, setUser] = useState(USER);
-  const [token, setToken] = useState(TOKEN);
+  const categoriesSnap = useSnapshot(categoriesState);
+
+  const errorSnap = useSnapshot(errorState);
 
   useEffect(() => {
-    const userFromLocalStorage = JSON.parse(localStorage.getItem("user"));
-    const tokenFromLocalStorage = localStorage.getItem("token");
-    if (userFromLocalStorage && tokenFromLocalStorage) {
-      setUser(userFromLocalStorage);
-      setToken(tokenFromLocalStorage);
-    }
+    const getCategories = async () => {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/categories`);
+      categoriesSnap.setCategories(response.data);
+      errorSnap.setError(null);
+    };
+
+    getCategories().catch((error) => {
+      if (error.toJSON().message === "Network Error") {
+        errorSnap.setError("Server is unavailable please try later");
+      } else {
+        errorSnap.setError(
+          error.response.data?.message || "Server is unavailable please try later",
+        );
+      }
+    });
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
-      <AuthContext.Provider value={{ token, setToken }}>
-        <RouterProvider router={router} />
-      </AuthContext.Provider>
-    </UserContext.Provider>
+    // <Layout>
+    <>
+      <Error />
+      <Router>
+        <Routes>
+          <Route path='/*' element={<Layout />} />
+        </Routes>
+      </Router>
+    </>
+    // </Layout>
   );
 };
 
