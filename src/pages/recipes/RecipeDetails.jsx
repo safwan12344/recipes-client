@@ -39,7 +39,13 @@ const fetcher = async (url) => {
 
 async function imageUrlToBase64(url) {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+      "Access-Control-Allow-Headers" : "Content-Type",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+      }
+    });
 
     const blob = await response.arrayBuffer();
 
