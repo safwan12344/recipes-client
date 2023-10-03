@@ -12,23 +12,36 @@ const Categories = () => {
   }
 
   return (
-    <div className='categories'>
-      {categories.map((category) => {
-        return (
-          <Link key={category._id} to={`/category/${category._id}`}>
-            <div className='category'>
-              <Image
-                className='category-image'
-                src={category.imageURL}
-                alt={category.name}
-                rounded
-              />
-              <div className='category-name'>{category.name}</div>
-            </div>
-          </Link>
-        );
-      })}
-    </div>
+    <>
+      <p
+        style={{
+          padding: "0 16px",
+          textAlign: "center",
+          fontSize: 20,
+          fontStyle: "italic",
+          fontWeight: "bold",
+        }}
+      >
+        Categories
+      </p>
+      <div className='categories'>
+        {categories.map((category) => {
+          return (
+            <Link key={category._id} to={`/category/${category._id}`}>
+              <div className='category'>
+                <Image
+                  className='category-image'
+                  src={category.imageURL}
+                  alt={category.name}
+                  rounded
+                />
+                <div className='category-name'>{category.name}</div>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    </>
   );
 };
 

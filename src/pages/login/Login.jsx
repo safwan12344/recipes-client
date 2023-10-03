@@ -62,7 +62,6 @@ const Login = () => {
           <div className='login-left-side'></div>
           <div className='login-right-side'>
             <h1 className='login-title'>Login</h1>
-            <Link to={"/"}>Home Page</Link>
             <Form onSubmit={onLogin} autoComplete='off'>
               <Form.Group className='mb-3' controlId='formUsername'>
                 <Form.Label>Username</Form.Label>

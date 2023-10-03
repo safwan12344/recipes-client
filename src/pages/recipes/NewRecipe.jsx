@@ -45,17 +45,17 @@ const schema = yup.object({
           return false;
         }
         const ext = file[0].name.split(".")[1];
-        const isValid = ["png", "jpg", "jpeg"].includes(ext);
+        const isValid = ["png"].includes(ext);
         return isValid;
       },
     })
     .test({
-      message: `File too big, can't exceed 1MB`,
+      message: `File too big, can't exceed 3MB`,
       test: (file) => {
         if (file.length == 0) {
           return false;
         }
-        const sizeLimit = 1;
+        const sizeLimit = 3;
         const totalSizeInMB = file[0].size / 1000000;
         const isValid = totalSizeInMB <= sizeLimit;
         return isValid;

@@ -2,7 +2,7 @@
 import { Button } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
 import axios from "axios";
 import { useSnapshot } from "valtio";
@@ -18,6 +18,9 @@ import {
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import RecipePDF from "./RecipePDF";
+import { Buffer } from "buffer";
 
 // const getRecpie = (recepieId) => {
 //   return async () => {
@@ -26,7 +29,29 @@ import {
 //   }
 // }
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = async (url) => {
+  const URL = url.split("/base64")[0];
+  const response = await fetch(URL);
+  const json = await response.json();
+  const base64 = await imageUrlToBase64(json.imageURL);
+  return { ...json, base64 };
+};
+
+async function imageUrlToBase64(url) {
+  try {
+    const response = await fetch(url);
+
+    const blob = await response.arrayBuffer();
+
+    const contentType = response.headers.get("content-type");
+
+    const base64String = `data:${contentType};base64,${Buffer.from(blob).toString("base64")}`;
+
+    return base64String;
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 export default function RecipeDetails() {
   const params = useParams();
@@ -40,8 +65,8 @@ export default function RecipeDetails() {
     `${process.env.REACT_APP_API_URL}/recipes/${params.id}`,
     fetcher,
   );
+
   const recipe = data;
-  console.log({ data });
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -89,105 +114,118 @@ export default function RecipeDetails() {
     return <div>fetching recpie ...</div>;
   }
 
+  const { base64 } = data;
+
   return (
-    <div style={{ padding: "15px 0 0 20%", height: "100%" }}>
-      <div style={{ fontWeight: "bold", fontSize: 30 }}>{recipe.name}</div>
-      <div style={{ display: "flex", marginBottom: 10, marginTop: 10 }}>
-        <div style={{ marginRight: 5, color: "#fff700" }}>
-          <i className={getIconStar(1, 0.5)}></i>
-          <i className={getIconStar(2, 1.5)}></i>
-          <i className={getIconStar(3, 2.5)}></i>
-          <i className={getIconStar(4, 3.5)}></i>
-          <i className={getIconStar(5, 4.5)}></i>
-        </div>
-        <span style={{ marginRight: 40 }}>
-          {recipe.rating.toFixed(2)} ({recipe.numberOfVotes.toLocaleString()})
-        </span>
-        {(userSnap.user?.role === "user" || !userSnap.user) && (
-          <>
-            <Button onClick={onRating} size='sm' variant='primary'>
-              ADD RATING
-            </Button>
-            <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>
-              <Modal.Header closeButton>
-                <Modal.Title>Rate this recipe</Modal.Title>
-              </Modal.Header>
-              <Modal.Body>
-                <ReactStars
-                  count={5}
-                  onChange={ratingChanged}
-                  size={40}
-                  isHalf={true}
-                  emptyIcon={<i className='fa-regular fa-star'></i>}
-                  halfIcon={<i className='fa-solid fa-star-half-stroke'></i>}
-                  fullIcon={<i className='fa-solid fa-star'></i>}
-                  activeColor='#fff700'
-                />
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant='secondary' onClick={handleClose}>
-                  Close
-                </Button>
-                <Button onClick={updateRecepieRating} variant='primary'>
-                  send
-                </Button>
-              </Modal.Footer>
-            </Modal>
-          </>
-        )}
-      </div>
-      <div style={{ maxWidth: "40%" }}>{recipe.description}</div>
-      <div style={{ marginTop: 10 }}>
-        <FacebookShareButton url={window.location.href}>
-          <FacebookIcon size={32} round />
-        </FacebookShareButton>
-        <WhatsappShareButton title={recipe.name} url={window.location.href}>
-          <WhatsappIcon size={32} round />
-        </WhatsappShareButton>
-        <EmailShareButton url={window.location.href}>
-          <EmailIcon size={32} round />
-        </EmailShareButton>
-      </div>
-      <div>
-        <img style={{ height: "400px", width: "500px", marginTop: 20 }} src={recipe.imageURL} />
-      </div>
-      <div>
-        <div style={{ fontWeight: "bold", fontSize: 30, marginTop: 20, fontStyle: "italic" }}>
-          Ingredients
-        </div>
-        <ul>
-          {recipe.ingredients.map((item, index) => {
-            return (
-              <li style={{ marginTop: 20 }} key={item._id}>
-                <span
-                  style={{
-                    padding: "5px 10px",
-                    color: "black",
-                    backgroundColor: index % 2 == 0 ? "rgba(0,0,0, 0.12)" : "rgba(238,96,85, 0.25)",
-                  }}
-                >{`${item.unit} ${item.name} ${item.amount}`}</span>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      {recipe.preparation.map((value, index) => {
-        return (
-          <div style={{ marginBottom: 10 }} key={index}>
-            <p style={{ marginBottom: 3, fontWeight: "bold", fontSize: 20 }}>{`Step ${++index}`}</p>
-            <div style={{ maxWidth: "55%", fontStyle: "oblique" }}>{value}</div>
+    <>
+      <div style={{ padding: "15px 0 0 20%", height: "100%" }}>
+        <div style={{ fontWeight: "bold", fontSize: 30 }}>{recipe.name}</div>
+        <div style={{ display: "flex", marginBottom: 10, marginTop: 10 }}>
+          <div style={{ marginRight: 5, color: "#fff700" }}>
+            <i className={getIconStar(1, 0.5)}></i>
+            <i className={getIconStar(2, 1.5)}></i>
+            <i className={getIconStar(3, 2.5)}></i>
+            <i className={getIconStar(4, 3.5)}></i>
+            <i className={getIconStar(5, 4.5)}></i>
           </div>
-        );
-      })}
-      <a
-        style={{ color: "blue", border: "1px solid blue", cursor: "pointer", padding: 5 }}
-        href={recipe.orderLink}
-        target='_blank'
-        rel='noreferrer'
-      >
-        Order now
-      </a>
-      <RecipeComments comments={recipe.comments} recpieId={recipe._id} />
-    </div>
+          <span style={{ marginRight: 40 }}>
+            {recipe.rating.toFixed(2)} ({recipe.numberOfVotes.toLocaleString()})
+          </span>
+          {(userSnap.user?.role === "user" || !userSnap.user) && (
+            <>
+              <Button onClick={onRating} size='sm' variant='primary'>
+                ADD RATING
+              </Button>
+              <Modal show={show} onHide={handleClose} backdrop='static' keyboard={false}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Rate this recipe</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <ReactStars
+                    count={5}
+                    onChange={ratingChanged}
+                    size={40}
+                    isHalf={true}
+                    emptyIcon={<i className='fa-regular fa-star'></i>}
+                    halfIcon={<i className='fa-solid fa-star-half-stroke'></i>}
+                    fullIcon={<i className='fa-solid fa-star'></i>}
+                    activeColor='#fff700'
+                  />
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant='secondary' onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button onClick={updateRecepieRating} variant='primary'>
+                    send
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </>
+          )}
+        </div>
+        <div style={{ maxWidth: "40%" }}>{recipe.description}</div>
+        <div style={{ marginTop: 10 }}>
+          <FacebookShareButton url={window.location.href}>
+            <FacebookIcon size={32} round />
+          </FacebookShareButton>
+          <WhatsappShareButton title={recipe.name} url={window.location.href}>
+            <WhatsappIcon size={32} round />
+          </WhatsappShareButton>
+          <EmailShareButton url={window.location.href}>
+            <EmailIcon size={32} round />
+          </EmailShareButton>
+        </div>
+        <PDFDownloadLink
+          fileName={recipe.name}
+          document={<RecipePDF recipe={recipe} base64={base64} />}
+        >
+          Download PDF
+        </PDFDownloadLink>
+        <div>
+          <img style={{ height: "400px", width: "500px", marginTop: 20 }} src={recipe.imageURL} />
+        </div>
+        <div>
+          <div style={{ fontWeight: "bold", fontSize: 30, marginTop: 20, fontStyle: "italic" }}>
+            Ingredients
+          </div>
+          <ul>
+            {recipe.ingredients.map((item, index) => {
+              return (
+                <li style={{ marginTop: 20 }} key={item._id}>
+                  <span
+                    style={{
+                      padding: "5px 10px",
+                      color: "black",
+                      backgroundColor:
+                        index % 2 == 0 ? "rgba(0,0,0, 0.12)" : "rgba(238,96,85, 0.25)",
+                    }}
+                  >{`${item.unit} ${item.name} ${item.amount}`}</span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        {recipe.preparation.map((value, index) => {
+          return (
+            <div style={{ marginBottom: 10 }} key={index}>
+              <p
+                style={{ marginBottom: 3, fontWeight: "bold", fontSize: 20 }}
+              >{`Step ${++index}`}</p>
+              <div style={{ maxWidth: "55%", fontStyle: "oblique" }}>{value}</div>
+            </div>
+          );
+        })}
+        <a
+          style={{ color: "blue", border: "1px solid blue", cursor: "pointer", padding: 5 }}
+          href={recipe.orderLink}
+          target='_blank'
+          rel='noreferrer'
+        >
+          Order now
+        </a>
+        <RecipeComments comments={recipe.comments} recpieId={recipe._id} />
+      </div>
+    </>
   );
 }

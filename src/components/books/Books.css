@@ -1,0 +1,19 @@
+.container-books {
+  display: grid;
+  padding: 0px 10px;
+  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+.book {
+  max-height: 500px;
+  cursor: pointer;
+}
+.book:hover {
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4);
+}
+.img-book {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  max-height: 65%;
+}

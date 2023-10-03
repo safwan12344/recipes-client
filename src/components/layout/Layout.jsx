@@ -12,6 +12,9 @@ import EditRecipe from "../../pages/recipes/EditRecipe";
 import { useSnapshot } from "valtio";
 import userState from "../../states/user";
 import RecipeDetails from "../../pages/recipes/RecipeDetails";
+import MyBooks from "../../pages/books/MyBooks";
+import AddBook from "../../pages/books/AddBook";
+import EditBook from "../../pages/books/EditBook";
 
 export default function Layout() {
   const { user } = useSnapshot(userState);
@@ -46,6 +49,48 @@ export default function Layout() {
                 redirectPath={user ? "/" : "/login"}
               >
                 <MyRecipes />
+              </ProtectedRoute>
+            );
+          }}
+        />
+
+        <Route
+          path='/books/new'
+          Component={() => {
+            return (
+              <ProtectedRoute
+                isAllowed={!!user && user.role === "business"}
+                redirectPath={user ? "/" : "/login"}
+              >
+                <AddBook />
+              </ProtectedRoute>
+            );
+          }}
+        />
+
+        <Route
+          path='/books/:id'
+          Component={() => {
+            return (
+              <ProtectedRoute
+                isAllowed={!!user && user.role === "business"}
+                redirectPath={user ? "/" : "/login"}
+              >
+                <EditBook />
+              </ProtectedRoute>
+            );
+          }}
+        />
+
+        <Route
+          path='/my-books'
+          Component={() => {
+            return (
+              <ProtectedRoute
+                isAllowed={!!user && user.role === "business"}
+                redirectPath={user ? "/" : "/login"}
+              >
+                <MyBooks />
               </ProtectedRoute>
             );
           }}

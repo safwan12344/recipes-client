@@ -26,7 +26,7 @@ const Carosel = () => {
       <OwlCarousel
         autoplayHoverPause
         dots={false}
-        items={4}
+        items={data.length >= 4 ? 4 : data.length}
         autoplay
         lazyLoad
         className='owl-theme'

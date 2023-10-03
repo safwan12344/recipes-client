@@ -12,9 +12,10 @@ const Header = () => {
   const user = userSnap.user;
   const location = useLocation();
 
-  const hideSearch = /(\/login|\/signup|\/recipes\/new|\/edit-recipe|\/recipe-details)/g.test(
-    location.pathname,
-  );
+  const hideSearch =
+    /(\/login|\/signup|\/recipes\/new|\/edit-recipe|\/recipe-details|\/category|\/my-books|\/books)/g.test(
+      location.pathname,
+    );
 
   const logout = () => {
     userSnap.setUser(null);
@@ -43,9 +44,15 @@ const Header = () => {
               </Nav.Link>
 
               {user?.role === "business" && (
-                <Nav.Link as={Link} to='/my-recipes'>
-                  My Recipes
-                </Nav.Link>
+                <>
+                  <Nav.Link as={Link} to='/my-recipes'>
+                    My Recipes
+                  </Nav.Link>
+
+                  <Nav.Link as={Link} to='/my-books'>
+                    My Books
+                  </Nav.Link>
+                </>
               )}
 
               {!user?._id && (

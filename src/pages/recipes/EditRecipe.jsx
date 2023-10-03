@@ -13,7 +13,7 @@ import Alert from "react-bootstrap/Alert";
 import { /*Controller,*/ useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import "./NewRecipe.css";
+import "./EditRecipe.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const schema = yup.object({
@@ -40,17 +40,17 @@ const schema = yup.object({
           return true;
         }
         const ext = file[0].name.split(".")[1];
-        const isValid = ["png", "jpg", "jpeg"].includes(ext);
+        const isValid = ["png"].includes(ext);
         return isValid;
       },
     })
     .test({
-      message: `File too big, can't exceed 1MB`,
+      message: `File too big, can't exceed 3MB`,
       test: (file) => {
         if (!file || file.length == 0) {
           return true;
         }
-        const sizeLimit = 1;
+        const sizeLimit = 3;
         const totalSizeInMB = file[0].size / 1000000;
         const isValid = totalSizeInMB <= sizeLimit;
         return isValid;
@@ -154,6 +154,7 @@ export default function EditRecipe() {
       category: recipe.category,
       time: recipe.time,
       files: null,
+      orderLink: recipe.orderLink,
     },
     resolver: yupResolver(schema),
   });
@@ -232,14 +233,21 @@ export default function EditRecipe() {
         },
       });
       setShowAlert(true);
+      setAlertMessage("recipe successfuly edited");
 
       setTimeout(() => {
         setShowAlert(false);
-        setAlertMessage("recipe successfuly edited");
+        setAlertMessage("");
         navigate(-1);
       }, 3000);
     } catch (error) {
       console.log(error);
+      setShowAlert(true);
+      setAlertMessage("Error: " + error.message);
+      setTimeout(() => {
+        setShowAlert(false);
+        setAlertMessage("");
+      }, 3000);
     }
   };
 
@@ -300,7 +308,7 @@ export default function EditRecipe() {
           <Form.Control
             {...register("files")}
             type='file'
-            accept='image/png, image/jpeg'
+            accept='image/png'
             placeholder='upload image'
           />
           {errors.files?.message && <div style={{ color: "red" }}>{errors.files?.message}</div>}
@@ -458,7 +466,7 @@ export default function EditRecipe() {
           }
         }}
       >
-        Edit
+        Save Changes
       </Button>
 
       <Button variant='danger' onClick={deleteRecipe}>
