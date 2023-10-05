@@ -5,6 +5,7 @@ import CommentForm from "./CommentForm";
 import { useSnapshot } from "valtio";
 import userState from "../../states/user";
 import ReplyCommentForm from "./ReplyCommentForm";
+import React from "react";
 export default function RecipeComments({ comments, recpieId }) {
   const userSnap = useSnapshot(userState);
 
@@ -16,7 +17,7 @@ export default function RecipeComments({ comments, recpieId }) {
       <div className='replies-container'>
         {comment.replies.map((reply) => {
           return (
-            <>
+            <React.Fragment key={reply._id}>
               <div className='reply' key={reply._id}>
                 <p className='reply-username'>{reply.username}</p>
                 <p className='reply-text'>{reply.comment}</p>
@@ -29,7 +30,7 @@ export default function RecipeComments({ comments, recpieId }) {
                 )}
               </div>
               {renderReplies(reply)}
-            </>
+            </React.Fragment>
           );
         })}
       </div>
@@ -68,7 +69,7 @@ export default function RecipeComments({ comments, recpieId }) {
 
 RecipeComments.propTypes = {
   comments: PropTypes.arrayOf(
-    PropTypes.objectOf({
+    PropTypes.shape({
       _id: PropTypes.string,
       username: PropTypes.string,
       comment: PropTypes.string,

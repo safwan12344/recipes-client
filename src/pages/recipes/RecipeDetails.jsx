@@ -20,40 +20,12 @@ import {
 } from "react-share";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import RecipePDF from "./RecipePDF";
-import { Buffer } from "buffer";
-
-// const getRecpie = (recepieId) => {
-//   return async () => {
-//     debugger
-//    return await axios.get(`${process.env.REACT_APP_API_URL}/recipes/${recepieId}`)
-//   }
-// }
 
 const fetcher = async (url) => {
-  const URL = url.split("/base64")[0];
-  const response = await fetch(URL);
+  const response = await fetch(url);
   const json = await response.json();
-  const base64 = await imageUrlToBase64(json.imageURL);
-  return { ...json, base64 };
+  return json;
 };
-
-async function imageUrlToBase64(url) {
-  try {
-    const response = await fetch(url, {
-      mode: "no-cors",
-    });
-
-    const blob = await response.arrayBuffer();
-
-    const contentType = response.headers.get("content-type");
-
-    const base64String = `data:${contentType};base64,${Buffer.from(blob).toString("base64")}`;
-
-    return base64String;
-  } catch (err) {
-    console.log(err);
-  }
-}
 
 export default function RecipeDetails() {
   const params = useParams();
@@ -116,8 +88,6 @@ export default function RecipeDetails() {
     return <div>fetching recpie ...</div>;
   }
 
-  const { base64 } = data;
-
   return (
     <>
       <div style={{ padding: "15px 0 0 20%", height: "100%" }}>
@@ -178,10 +148,7 @@ export default function RecipeDetails() {
             <EmailIcon size={32} round />
           </EmailShareButton>
         </div>
-        <PDFDownloadLink
-          fileName={recipe.name}
-          document={<RecipePDF recipe={recipe} base64={base64} />}
-        >
+        <PDFDownloadLink fileName={recipe.name} document={<RecipePDF recipe={recipe} />}>
           Download PDF
         </PDFDownloadLink>
         <div>

@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { Document, Page, Text, View, Image, StyleSheet, Font } from "@react-pdf/renderer";
-// import RobotoBlack from "../../assets/fonts/Roboto-Black.ttf"
 import RobotoBold from "../../assets/fonts/Roboto-Bold.ttf";
 import RobotoLight from "../../assets/fonts/Roboto-Light.ttf";
 
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function RecipePDF({ recipe, base64 }) {
+function RecipePDF({ recipe }) {
   return (
     <Document style={{ width: 400, height: 400 }}>
       <Page size='A4' style={styles.page}>
@@ -72,7 +71,8 @@ function RecipePDF({ recipe, base64 }) {
           <Text>{recipe.description}</Text>
         </View>
         <View style={[styles.section, styles.image]}>
-          <Image src={base64} />
+          {/* Dont remove noCache bug fix in Image component(cors issue) */}
+          <Image src={recipe.imageURL + "?noCache=" + Math.random().toString()} />
         </View>
         <View style={styles.section}>
           <Text>Ingredients:</Text>
@@ -94,7 +94,7 @@ function RecipePDF({ recipe, base64 }) {
           <View style={styles.preparations}>
             {recipe.preparation.map((item, index) => {
               return (
-                <View style={styles.preparation} key={item}>
+                <View style={styles.preparation} key={index}>
                   <Text style={styles.step}>{`Step ${index + 1}`}</Text>
                   <Text>{item}</Text>
                 </View>
@@ -109,7 +109,6 @@ function RecipePDF({ recipe, base64 }) {
 
 RecipePDF.propTypes = {
   recipe: PropTypes.object.isRequired,
-  base64: PropTypes.string.isRequired,
 };
 
 export default RecipePDF;
