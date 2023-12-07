@@ -1,7 +1,7 @@
 import React, { useEffect, useLayoutEffect } from "react";
 import { Form, InputGroup } from "react-bootstrap";
 import "./Search.css";
-import axios from "axios";
+import axios from "../../utils/axios";
 import { useSnapshot } from "valtio";
 import searchState from "../../states/search";
 import authState from "../../states/auth";

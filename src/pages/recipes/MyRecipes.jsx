@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../../utils/axios";
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -31,15 +31,17 @@ export default function MyRecipes() {
       errorSnap.setError(null);
     };
 
-    getAllMyRecipe().catch((error) => {
-      if (error.toJSON().message === "Network Error") {
-        errorSnap.setError("Server is unavailable please try later");
-      } else {
-        errorSnap.setError(
-          error.response.data?.message || "Server is unavailable please try later",
-        );
-      }
-    });
+    //TODO: use library to manage errors(toast)
+    getAllMyRecipe().catch(() => {})
+    // .catch((error) => {
+    //   if (error.toJSON().message === "Network Error") {
+    //     errorSnap.setError("Server is unavailable please try later");
+    //   } else {
+    //     errorSnap.setError(
+    //       error.response.data?.message || "Server is unavailable please try later",
+    //     )
+    //   }
+    // });
   }, []);
 
   return (

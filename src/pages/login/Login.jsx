@@ -2,7 +2,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
-import axios from "axios";
+import axios from "../../utils/axios";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 
 import "./Login.css";

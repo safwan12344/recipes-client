@@ -4,7 +4,7 @@ import "./AddBook.css";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import axios from "axios";
+import axios from "../../utils/axios";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import authState from "../../states/auth";

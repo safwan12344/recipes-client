@@ -1,5 +1,5 @@
 import "./BookList.css";
-import axios from "axios";
+import axios from "../../utils/axios";
 import useSWR from "swr";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";

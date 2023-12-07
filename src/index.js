@@ -3,9 +3,11 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-import axios from "axios";
+import Router from "./components/router/Router"
+import history from "./components/router/history";
+import axios from "./utils/axios";
 import { useSnapshot } from "valtio";
 import categoriesState from "./states/categories";
 import Error from "./components/error/Error";
@@ -38,7 +40,7 @@ const Root = () => {
     // <Layout>
     <>
       <Error />
-      <Router>
+      <Router history={history}>
         <Routes>
           <Route path='/*' element={<Layout />} />
         </Routes>

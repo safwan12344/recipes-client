@@ -3,7 +3,7 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Books from "../../components/books/Books";
 import useSWR from "swr";
-import axios from "axios";
+import axios from "../../utils/axios";
 import { useSnapshot } from "valtio";
 import authState from "../../states/auth";
 

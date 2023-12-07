@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { useState, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
-import axios from "axios";
+import axios from "../../utils/axios";
 import { useSnapshot } from "valtio";
 import authState from "../../states/auth";
 import userState from "../../states/user";

@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Form } from "react-bootstrap";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import axios from "../../utils/axios";
 import PropTypes from "prop-types";
 import { useSnapshot } from "valtio";
 import authState from "../../states/auth";

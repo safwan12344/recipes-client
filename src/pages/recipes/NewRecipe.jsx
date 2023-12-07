@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import { Table, Column, HeaderCell, Cell } from "rsuite-table";
 // import propTypes from "prop-types"
 import "rsuite-table/dist/css/rsuite-table.min.css"; // or 'rsuite-table/dist/css/rsuite-table.css'
-import axios from "axios";
+import axios from "../../utils/axios";
 import authState from "../../states/auth";
 import { useSnapshot } from "valtio";
 import categoriesState from "../../states/categories";
