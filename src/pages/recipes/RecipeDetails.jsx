@@ -84,6 +84,16 @@ export default function RecipeDetails() {
     }
   };
 
+  const getIngredient = (item) => {
+    if(!item.unit && !item.amount){
+      return item.name
+    }
+    if(!item.unit && item.amount){
+      return `${item.amount} ${item.name}`
+    }
+    return `${item.amount} ${item.unit} of ${item.name}`
+  }
+
   if (isLoading) {
     return <div>fetching recpie ...</div>;
   }
@@ -169,7 +179,7 @@ export default function RecipeDetails() {
                       backgroundColor:
                         index % 2 == 0 ? "rgba(0,0,0, 0.12)" : "rgba(238,96,85, 0.25)",
                     }}
-                  >{`${item.unit} ${item.name} ${item.amount}`}</span>
+                  >{getIngredient(item)}</span>
                 </li>
               );
             })}
