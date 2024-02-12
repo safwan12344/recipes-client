@@ -5,13 +5,14 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import { Route, Routes } from "react-router-dom";
 import Layout from "./components/layout/Layout";
-import Router from "./components/router/Router"
+import Router from "./components/router/Router";
 import history from "./components/router/history";
 import axios from "./utils/axios";
 import { useSnapshot } from "valtio";
 import categoriesState from "./states/categories";
 import Error from "./components/error/Error";
 import errorState from "./states/error";
+import { Toaster } from "react-hot-toast";
 
 const Root = () => {
   const categoriesSnap = useSnapshot(categoriesState);
@@ -40,6 +41,7 @@ const Root = () => {
     // <Layout>
     <>
       <Error />
+      <Toaster position='top-center' reverseOrder={false} />
       <Router history={history}>
         <Routes>
           <Route path='/*' element={<Layout />} />

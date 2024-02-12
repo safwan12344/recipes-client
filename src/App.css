@@ -1,0 +1,19 @@
+.App {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.left-side {
+  flex: 5;
+  overflow: hidden;
+}
+.right-side {
+  flex: 1.1;
+  overflow: hidden;
+}
+.left-main {
+  overflow-y: scroll;
+  height: 92%;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+}

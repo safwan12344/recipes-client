@@ -1,0 +1,100 @@
+.activity-root-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-main {
+  display: flex;
+  padding-top: 16px;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  max-width: 80%;
+}
+
+.activity-name {
+  margin-bottom: 16px;
+  color: #777;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+}
+.activity-img-container {
+  width: 48%;
+  height: 380px;
+}
+.activity-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+.container-props {
+  width: 30%;
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.activity-date-container {
+  margin-top: auto;
+}
+.activity-date-container,
+.activity-location-container,
+.activity-participants-container {
+  display: flex;
+  align-items: start;
+}
+
+.activity-date-container,
+.activity-location {
+  margin-bottom: 8px;
+}
+
+.activity-icon {
+  margin-right: 10px;
+  font-size: 20px;
+}
+
+.activity-date,
+.activity-location,
+.activity-participants {
+  font-size: 20px;
+  transform: translateY(-6px);
+}
+.button-attend {
+  margin-right: 20px;
+  width: 120px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button-share {
+  width: 120px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-button {
+  display: flex;
+}
+.full-event {
+  color: red;
+  margin-top: auto;
+  margin-bottom: 10px;
+}
+
+.push-down {
+  margin-top: auto;
+}
+.activity-details-container {
+  max-width: 65%;
+  align-self: flex-start;
+}
+.details {
+  font-style: italic;
+}

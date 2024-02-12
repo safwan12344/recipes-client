@@ -15,12 +15,13 @@ import RecipeDetails from "../../pages/recipes/RecipeDetails";
 import MyBooks from "../../pages/books/MyBooks";
 import AddBook from "../../pages/books/AddBook";
 import EditBook from "../../pages/books/EditBook";
+import Activity from "../../pages/activities/Activity";
 
 export default function Layout() {
   const { user } = useSnapshot(userState);
 
   return (
-    <div style={{ height: "100%" }}>
+    <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Header />
       <Routes>
         <Route path='/' Component={App} />
@@ -111,6 +112,8 @@ export default function Layout() {
         />
 
         <Route path='/recipe-details/:id' Component={RecipeDetails} />
+
+        <Route path='/activity/:id' Component={Activity} />
 
         <Route
           path='*'

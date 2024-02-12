@@ -32,7 +32,7 @@ export default function MyRecipes() {
     };
 
     //TODO: use library to manage errors(toast)
-    getAllMyRecipe().catch(() => {})
+    getAllMyRecipe().catch(() => {});
     // .catch((error) => {
     //   if (error.toJSON().message === "Network Error") {
     //     errorSnap.setError("Server is unavailable please try later");

@@ -1,11 +1,11 @@
 import { useLayoutEffect, useState } from "react";
 import { Router as RouterRRD } from "react-router-dom";
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
 
 const Router = ({ history, ...props }) => {
   const [state, setState] = useState({
     action: history.action,
-    location: history.location
+    location: history.location,
   });
 
   useLayoutEffect(() => history.listen(setState), [history]);
@@ -19,8 +19,8 @@ const Router = ({ history, ...props }) => {
     />
   );
 };
-export default Router
+export default Router;
 
 Router.propTypes = {
-    history: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };

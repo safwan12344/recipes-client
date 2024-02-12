@@ -9,7 +9,7 @@ import { useSnapshot } from "valtio";
 import authState from "../../states/auth";
 import userState from "../../states/user";
 import RecipeComments from "./RecipeComments";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import {
   EmailIcon,
   EmailShareButton,
@@ -59,6 +59,7 @@ export default function RecipeDetails() {
           },
         },
       );
+      mutate(`${process.env.REACT_APP_API_URL}/recipes/${params.id}`);
       handleClose();
     } catch (error) {
       console.log(error);
@@ -85,14 +86,14 @@ export default function RecipeDetails() {
   };
 
   const getIngredient = (item) => {
-    if(!item.unit && !item.amount){
-      return item.name
+    if (!item.unit && !item.amount) {
+      return item.name;
     }
-    if(!item.unit && item.amount){
-      return `${item.amount} ${item.name}`
+    if (!item.unit && item.amount) {
+      return `${item.amount} ${item.name}`;
     }
-    return `${item.amount} ${item.unit} of ${item.name}`
-  }
+    return `${item.amount} ${item.unit} of ${item.name}`;
+  };
 
   if (isLoading) {
     return <div>fetching recpie ...</div>;
@@ -100,7 +101,7 @@ export default function RecipeDetails() {
 
   return (
     <>
-      <div style={{ padding: "15px 0 0 20%", height: "100%" }}>
+      <div style={{ padding: "15px 0 0 20%", height: "100%", overflowY: "auto" }}>
         <div style={{ fontWeight: "bold", fontSize: 30 }}>{recipe.name}</div>
         <div style={{ display: "flex", marginBottom: 10, marginTop: 10 }}>
           <div style={{ marginRight: 5, color: "#fff700" }}>
@@ -179,7 +180,9 @@ export default function RecipeDetails() {
                       backgroundColor:
                         index % 2 == 0 ? "rgba(0,0,0, 0.12)" : "rgba(238,96,85, 0.25)",
                     }}
-                  >{getIngredient(item)}</span>
+                  >
+                    {getIngredient(item)}
+                  </span>
                 </li>
               );
             })}
