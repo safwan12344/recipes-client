@@ -36,6 +36,10 @@ export default function Activity() {
   if (isLoading) {
     return <div>Loaidng Activity...</div>;
   }
+
+  const isUserAttending = data.participants.some((p) => p === userSnap.user?.username);
+  const canAttend = !(data.maxOfParticipants === data.participants.length && !isUserAttending);
+
   const onAttend = async () => {
     if (!userSnap.user) {
       return navigate("/login", { state: { goBack: true } });
@@ -49,8 +53,10 @@ export default function Activity() {
         })
         .then(() => mutate(`${process.env.REACT_APP_API_URL}/activities/${params.id}`)),
       {
-        loading: "Attending...",
-        success: (
+        loading: isUserAttending ? "Cancling..." : "Attending...",
+        success: isUserAttending ? (
+          <b>You have successuflly canceled your participation</b>
+        ) : (
           <b>
             You have successfully registered for the event and an email will be sent to you
             immediately
@@ -60,9 +66,6 @@ export default function Activity() {
       },
     );
   };
-
-  const isUserAttending = data.participants.some((p) => p === userSnap.user?.username);
-  const canAttend = !(data.maxOfParticipants === data.participants.length && !isUserAttending);
 
   return (
     <div className='activity-root-container'>
