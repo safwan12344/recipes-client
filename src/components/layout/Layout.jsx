@@ -16,6 +16,10 @@ import MyBooks from "../../pages/books/MyBooks";
 import AddBook from "../../pages/books/AddBook";
 import EditBook from "../../pages/books/EditBook";
 import Activity from "../../pages/activities/Activity";
+import MyActivities from "../../pages/activities/MyActivities";
+import CreateActivity from "../../pages/activities/CreateActivity";
+import EditActivity from "../../pages/activities/EditActivity";
+import MonthlyActivities from "../../pages/activities/MonthlyActivities";
 
 export default function Layout() {
   const { user } = useSnapshot(userState);
@@ -24,7 +28,7 @@ export default function Layout() {
     <div style={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Header />
       <Routes>
-        <Route path='/' Component={App} />
+        <Route exact path='/' Component={App} />
         <Route path='/login' Component={Login} />
         <Route path='/signup' Component={SignUp} />
         <Route path='/category/:id' Component={CategoryRecipes} />
@@ -98,6 +102,47 @@ export default function Layout() {
         />
 
         <Route
+          path='/my-activities'
+          Component={() => {
+            return (
+              <ProtectedRoute
+                isAllowed={!!user && user.role === "business"}
+                redirectPath={user ? "/" : "/login"}
+              >
+                <MyActivities />
+              </ProtectedRoute>
+            );
+          }}
+        />
+
+        <Route
+          path='/create-activity'
+          Component={() => {
+            return (
+              <ProtectedRoute
+                isAllowed={!!user && user.role === "business"}
+                redirectPath={user ? "/" : "/login"}
+              >
+                <CreateActivity />
+              </ProtectedRoute>
+            );
+          }}
+        />
+        <Route
+          path='/edit-activity/:id'
+          Component={() => {
+            return (
+              <ProtectedRoute
+                isAllowed={!!user && user.role === "business"}
+                redirectPath={user ? "/" : "/login"}
+              >
+                <EditActivity />
+              </ProtectedRoute>
+            );
+          }}
+        />
+
+        <Route
           path='/edit-recipe'
           Component={() => {
             return (
@@ -114,12 +159,21 @@ export default function Layout() {
         <Route path='/recipe-details/:id' Component={RecipeDetails} />
 
         <Route path='/activity/:id' Component={Activity} />
+        <Route path='/activities/monthly' Component={MonthlyActivities} />
 
         <Route
           path='*'
           Component={() => {
             return (
-              <div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  height: "100%",
+                }}
+              >
                 <h1>404</h1>
                 <h3>page not found</h3>
                 <p>Its look like you trying to reach a page that does not exsits</p>

@@ -52,6 +52,10 @@ const Header = () => {
                   <Nav.Link as={Link} to='/my-books'>
                     My Books
                   </Nav.Link>
+
+                  <Nav.Link as={Link} to='/my-activities'>
+                    My Activities
+                  </Nav.Link>
                 </>
               )}
 

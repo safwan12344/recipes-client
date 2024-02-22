@@ -45,7 +45,7 @@ export default function MyRecipes() {
   }, []);
 
   return (
-    <div>
+    <div style={{ overflowY: "auto" }}>
       <div style={{ display: "flex", alignItems: "center" }}>
         <Button style={{ margin: "20px 0px 20px 0px" }} onClick={addNewRecipe} variant='primary'>
           create new recipe

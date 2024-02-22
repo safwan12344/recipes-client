@@ -270,7 +270,7 @@ export default function EditRecipe() {
   };
 
   return (
-    <>
+    <div style={{ overflowY: "auto" }}>
       <h1> Edit recipe </h1>
       <Form ref={formRef} onSubmit={handleSubmit(editRecepie)}>
         <Form.Group className='mb-3' controlId='formRecipeName'>
@@ -303,7 +303,9 @@ export default function EditRecipe() {
           )}
         </Form.Group>
         <Form.Group className='mb-3' controlId='formDescription'>
-          <img width={120} height={120} src={recipe.imageURL} />
+          <div>
+            <img width={120} height={120} src={recipe.imageURL} />
+          </div>
           <Form.Label>Image</Form.Label>
           <Form.Control
             {...register("files")}
@@ -472,6 +474,6 @@ export default function EditRecipe() {
       <Button variant='danger' onClick={deleteRecipe}>
         Delete recipe
       </Button>
-    </>
+    </div>
   );
 }

@@ -86,3 +86,16 @@
   width: 100%;
   height: 150px;
 }
+.link-container {
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 20px;
+}
+
+.monthly-activities-link {
+  text-decoration: none;
+  color: rgba(82, 51, 255, 0.5);
+}
+.monthly-activities-link:hover {
+  color: rgba(82, 51, 255, 0.988);
+}

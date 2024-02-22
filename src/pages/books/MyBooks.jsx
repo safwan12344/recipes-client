@@ -23,7 +23,7 @@ export default function MyBooks() {
     async (key) => await fetcher(key, authSnap.token),
   );
 
-  if (isLoading) {
+  if (isLoading && !data) {
     return <div>Loading user books...</div>;
   }
 

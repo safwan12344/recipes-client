@@ -14,13 +14,19 @@ export default function WeeklyActivities() {
   if (isLoading) {
     return <div>Loaidng activities...</div>;
   }
-  console.log(data);
 
   return (
     <div className='weekly-main-contianer'>
+      <div className='link-container'>
+        {" "}
+        <Link className='monthly-activities-link' to={"/activities/monthly"}>
+          view monthly activities
+        </Link>
+      </div>
       <div className='activties-title'>Weekly Activities</div>
       <div className='scrollable'>
         <div className='weekly-activities-container'>
+          {data.length == 0 && <div>There are no activities for this week</div>}
           {data.map((activity) => {
             return (
               <Link className='activity-link' to={`/activity/${activity._id}`} key={activity._id}>

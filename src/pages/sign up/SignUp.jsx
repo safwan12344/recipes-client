@@ -58,61 +58,59 @@ const SignUp = () => {
   };
 
   return (
-    <>
-      <div className='signup-container'>
-        <h1>Sign up</h1>
-        <Form onSubmit={handleSubmit(onSignUp)} className='signup-form'>
-          <Form.Group className='my-auto' controlId='formFirstname'>
-            <Form.Label>First Name</Form.Label>
-            <Form.Control {...register("firstName")} type='text' placeholder='Enter first name' />
+    <div className='signup-container'>
+      <h1>Sign up</h1>
+      <Form onSubmit={handleSubmit(onSignUp)} className='signup-form'>
+        <Form.Group className='my-auto' controlId='formFirstname'>
+          <Form.Label>First Name</Form.Label>
+          <Form.Control {...register("firstName")} type='text' placeholder='Enter first name' />
 
-            {errors.firstName?.message && (
-              <div style={{ color: "red" }}>{errors.firstName?.message}</div>
-            )}
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formLastname'>
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control {...register("lastName")} type='text' placeholder='Enter last name' />
-            {errors.lastName?.message && (
-              <div style={{ color: "red" }}>{errors.lastName?.message}</div>
-            )}
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Label>Email address</Form.Label>
-            <Form.Control {...register("email")} type='email' placeholder='Enter email' />
-            {errors.email?.message && <div style={{ color: "red" }}>{errors.email?.message}</div>}
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formUsername'>
-            <Form.Label>Username</Form.Label>
-            <Form.Control {...register("username")} type='text' placeholder='Enter uesrname' />
-            {errors.username?.message && (
-              <div style={{ color: "red" }}>{errors.username?.message}</div>
-            )}
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formPassword'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control {...register("password")} type='password' placeholder='Password' />
-            {errors.password?.message && (
-              <div style={{ color: "red" }}>{errors.password?.message}</div>
-            )}
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formRole'>
-            <Form.Label>chose role</Form.Label>
-            <Form.Select {...register("role")} aria-label='Default select example'>
-              <option value='user'>User</option>
-              <option value='business'>Business</option>
-            </Form.Select>
-            {errors.role?.message && <div style={{ color: "red" }}>{errors.role?.message}</div>}
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formRole'>
-            <Button variant='primary' type='submit'>
-              Sign Up
-            </Button>
-          </Form.Group>
-          <Link to={"/login"}>Already member ? Log in</Link>
-        </Form>
-      </div>
-    </>
+          {errors.firstName?.message && (
+            <div style={{ color: "red" }}>{errors.firstName?.message}</div>
+          )}
+        </Form.Group>
+        <Form.Group className='mb-3' controlId='formLastname'>
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control {...register("lastName")} type='text' placeholder='Enter last name' />
+          {errors.lastName?.message && (
+            <div style={{ color: "red" }}>{errors.lastName?.message}</div>
+          )}
+        </Form.Group>
+        <Form.Group className='mb-3' controlId='formBasicEmail'>
+          <Form.Label>Email address</Form.Label>
+          <Form.Control {...register("email")} type='email' placeholder='Enter email' />
+          {errors.email?.message && <div style={{ color: "red" }}>{errors.email?.message}</div>}
+        </Form.Group>
+        <Form.Group className='mb-3' controlId='formUsername'>
+          <Form.Label>Username</Form.Label>
+          <Form.Control {...register("username")} type='text' placeholder='Enter uesrname' />
+          {errors.username?.message && (
+            <div style={{ color: "red" }}>{errors.username?.message}</div>
+          )}
+        </Form.Group>
+        <Form.Group className='mb-3' controlId='formPassword'>
+          <Form.Label>Password</Form.Label>
+          <Form.Control {...register("password")} type='password' placeholder='Password' />
+          {errors.password?.message && (
+            <div style={{ color: "red" }}>{errors.password?.message}</div>
+          )}
+        </Form.Group>
+        <Form.Group className='mb-3' controlId='formRole'>
+          <Form.Label>chose role</Form.Label>
+          <Form.Select {...register("role")} aria-label='Default select example'>
+            <option value='user'>User</option>
+            <option value='business'>Business</option>
+          </Form.Select>
+          {errors.role?.message && <div style={{ color: "red" }}>{errors.role?.message}</div>}
+        </Form.Group>
+        <Form.Group className='mb-3' controlId='formRole'>
+          <Button variant='primary' type='submit'>
+            Sign Up
+          </Button>
+        </Form.Group>
+        <Link to={"/login"}>Already member ? Log in</Link>
+      </Form>
+    </div>
   );
 };
 

@@ -1,0 +1,13 @@
+.create-activity-root {
+  overflow-y: auto;
+}
+
+.create-activity-form {
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 10px 0;
+}
+
+.create-activity {
+  margin-bottom: 10px;
+}

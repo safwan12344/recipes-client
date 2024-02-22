@@ -18,7 +18,9 @@ export default function Recipes({ recipes, onRecipeClick }) {
                 </span>
               </div>
 
-              <Card.Text>{recipe.description}</Card.Text>
+              <div className='box'>
+                <Card.Text className='truncate'>{recipe.description}</Card.Text>
+              </div>
             </Card.Body>
           </Card>
         );
