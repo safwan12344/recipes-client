@@ -1,3 +1,18 @@
+.brand-name {
+  margin-left: 5px;
+
+  background-color: orange;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-size: 20px;
+  font-family: "Anta", sans-serif;
+  font-weight: 400;
+
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.15);
+}
+
 .bg-mycolor {
   background-color: #faedcd;
 }

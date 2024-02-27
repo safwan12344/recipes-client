@@ -28,13 +28,13 @@ export default function MyBooks() {
   }
 
   return (
-    <div style={{overflowY:"auto"}}>
+    <div style={{ overflowY: "auto" }}>
       <h1>My Books</h1>
       <Link to={"/books/new"}>
         <Button variant='primary'>Add Book</Button>
       </Link>
-      <div style={{marginBottom: 20, marginTop: 20}}>
-      <Books books={data} />
+      <div style={{ marginBottom: 20, marginTop: 20 }}>
+        <Books books={data} />
       </div>
     </div>
   );
