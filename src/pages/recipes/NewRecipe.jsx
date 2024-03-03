@@ -1,9 +1,8 @@
-/* eslint-disable react/prop-types */
 import { useRef, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { Table, Column, HeaderCell, Cell } from "rsuite-table";
-// import propTypes from "prop-types"
+import propTypes from "prop-types"
 import "rsuite-table/dist/css/rsuite-table.min.css"; // or 'rsuite-table/dist/css/rsuite-table.css'
 import axios from "../../utils/axios";
 import authState from "../../states/auth";
@@ -94,7 +93,6 @@ function uuidv4() {
   );
 }
 
-// eslint-disable-next-line react/prop-types
 const EditCell = ({ rowData, dataKey, onChange, Input, ...props }) => {
   return (
     <Cell {...props}>
@@ -109,6 +107,13 @@ const EditCell = ({ rowData, dataKey, onChange, Input, ...props }) => {
     </Cell>
   );
 };
+
+EditCell.propTypes = {
+  rowData: propTypes.object,
+  dataKey: propTypes.string,
+  onChange: propTypes.func,
+  Input:  propTypes.node,
+}
 
 // eslint-disable-next-line react/prop-types
 const ActionCell = ({ rowData, onClick, onDelete, ...props }) => {
@@ -236,7 +241,7 @@ export default function NewRecipe() {
   };
 
   return (
-    <>
+    <div className="new-recipe-container">
       <h1> Add new recipe </h1>
       <Form ref={formRef} onSubmit={handleSubmit(createRecepie)}>
         <Form.Group className='mb-3' controlId='formRecipeName'>
@@ -433,6 +438,6 @@ export default function NewRecipe() {
       >
         Add
       </Button>
-    </>
+    </div>
   );
 }
