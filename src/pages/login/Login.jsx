@@ -95,9 +95,7 @@ const Login = () => {
               </Form.Group>
 
               <Form.Group className='mb-3' controlId='formForgotPassword'>
-                <a className='login-forgot-password' href='forgot_password.html'>
-                  Forgot password
-                </a>
+                <Link to='/forgot-password'>Forgot password</Link>
               </Form.Group>
               <Form.Group className='mb-3' controlId='formSignup'>
                 <Link to={"/signup"}>not a member ? Sign up</Link>

@@ -20,6 +20,8 @@ import MyActivities from "../../pages/activities/MyActivities";
 import CreateActivity from "../../pages/activities/CreateActivity";
 import EditActivity from "../../pages/activities/EditActivity";
 import MonthlyActivities from "../../pages/activities/MonthlyActivities";
+import ForgotPassword from "../../pages/forgot-password/ForgotPassword";
+import ResetPassword from "../../pages/reset-password/ResetPassword";
 
 export default function Layout() {
   const { user } = useSnapshot(userState);
@@ -31,6 +33,8 @@ export default function Layout() {
         <Route exact path='/' Component={App} />
         <Route path='/login' Component={Login} />
         <Route path='/signup' Component={SignUp} />
+        <Route path='/forgot-password' Component={ForgotPassword} />
+        <Route path='/reset-password/:token' Component={ResetPassword} />
         <Route path='/category/:id' Component={CategoryRecipes} />
         <Route
           path='/recipes/new'
